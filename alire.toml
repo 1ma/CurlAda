@@ -1,0 +1,9 @@
+name = "curlada"
+description = "Ada cURL bindings"
+version = "0.0.0"
+
+authors = ["Marcel Hernandez"]
+maintainers = ["Marcel Hernandez <e6990620@gmail.com>"]
+maintainers-logins = ["1ma"]
+
+executables = ["adacurl"]
