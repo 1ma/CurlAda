@@ -1,148 +1,71 @@
 pragma Ada_2012;
 pragma Style_Checks (Off);
 
-with System;
 with CurlAda;
+with Interfaces.C.Strings;
 
 package CurlAda.Easy is
 
-  --**************************************************************************
-  -- *                                  _   _ ____  _
-  -- *  Project                     ___| | | |  _ \| |
-  -- *                             / __| | | | |_) | |
-  -- *                            | (__| |_| |  _ <| |___
-  -- *                             \___|\___/|_| \_\_____|
-  -- *
-  -- * Copyright (C) 1998 - 2019, Daniel Stenberg, <daniel@haxx.se>, et al.
-  -- *
-  -- * This software is licensed as described in the file COPYING, which
-  -- * you should have received as part of this distribution. The terms
-  -- * are also available at https://curl.haxx.se/docs/copyright.html.
-  -- *
-  -- * You may opt to use, copy, modify, merge, publish, distribute and/or sell
-  -- * copies of the Software, and permit persons to whom the Software is
-  -- * furnished to do so, under the terms of the COPYING file.
-  -- *
-  -- * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
-  -- * KIND, either express or implied.
-  -- *
-  -- **************************************************************************
-
-   function Init return CurlAda.CURL  -- /usr/include/x86_64-linux-gnu/curl/easy.h:28
+   function Init return CurlAda.CURL
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_init";
 
-   function Set_Opt (the_curl : CurlAda.CURL; option : CurlAda.CURLoption; value : Interfaces.C.Strings.chars_ptr
-      ) return CurlAda.CURLcode  -- /usr/include/x86_64-linux-gnu/curl/easy.h:29
+   function Set_Opt (
+      the_curl : CurlAda.CURL;
+      option : CurlAda.CURLoption;
+      value : Interfaces.C.Strings.chars_ptr
+   ) return CurlAda.CURLcode
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_setopt";
 
-   function Perform (the_curl : CurlAda.CURL) return CurlAda.CURLcode  -- /usr/include/x86_64-linux-gnu/curl/easy.h:30
+   function Perform (the_curl : CurlAda.CURL) return CurlAda.CURLcode
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_perform";
 
-   procedure Cleanup (the_curl : CurlAda.CURL)  -- /usr/include/x86_64-linux-gnu/curl/easy.h:31
+   procedure Cleanup (the_curl : CurlAda.CURL)
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_cleanup";
 
-  -- * NAME curl_easy_getinfo()
-  -- *
-  -- * DESCRIPTION
-  -- *
-  -- * Request internal information from the curl session with this function.  The
-  -- * third argument MUST be a pointer to a long, a pointer to a char * or a
-  -- * pointer to a double (as the documentation describes elsewhere).  The data
-  -- * pointed to will be filled in accordingly and can be relied upon only if the
-  -- * function returns CURLE_OK.  This function is intended to get used *AFTER* a
-  -- * performed transfer, all results from this function are undefined until the
-  -- * transfer is completed.
-  --
-
-   function Get_Info (the_curl : CurlAda.CURL; info : CurlAda.CURLINFO  -- , ...
-      ) return CurlAda.CURLcode  -- /usr/include/x86_64-linux-gnu/curl/easy.h:46
+   function Get_Info (the_curl : CurlAda.CURL; info : CurlAda.CURLINFO  -- , ...      <--- TODO
+      ) return CurlAda.CURLcode
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_getinfo";
 
-  -- * NAME curl_easy_duphandle()
-  -- *
-  -- * DESCRIPTION
-  -- *
-  -- * Creates a new curl session handle with the same options set for the handle
-  -- * passed in. Duplicating a handle could only be a matter of cloning data and
-  -- * options, internal state info and things like persistent connections cannot
-  -- * be transferred. It is useful in multithreaded applications when you can run
-  -- * curl_easy_duphandle() for each new thread to avoid a series of identical
-  -- * curl_easy_setopt() invokes in every thread.
-  --
-
-   function Dup_Handle (the_curl : CurlAda.CURL) return CurlAda.CURL  -- /usr/include/x86_64-linux-gnu/curl/easy.h:61
+   function Dup_Handle (the_curl : CurlAda.CURL) return CurlAda.CURL
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_duphandle";
 
-  -- * NAME curl_easy_reset()
-  -- *
-  -- * DESCRIPTION
-  -- *
-  -- * Re-initializes a CURL handle to the default values. This puts back the
-  -- * handle to the same state as it was in when it was just created.
-  -- *
-  -- * It does keep: live connections, the Session ID cache, the DNS cache and the
-  -- * cookies.
-  --
-
-   procedure Reset (the_curl : CurlAda.CURL)  -- /usr/include/x86_64-linux-gnu/curl/easy.h:74
+   procedure Reset (the_curl : CurlAda.CURL)
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_reset";
-
-  -- * NAME curl_easy_recv()
-  -- *
-  -- * DESCRIPTION
-  -- *
-  -- * Receives data from the connected socket. Use after successful
-  -- * curl_easy_perform() with CURLOPT_CONNECT_ONLY option.
-  --
 
    function Recv
      (the_curl : CurlAda.CURL;
       buffer : System.Address;
       buflen : size_t;
-      n : access size_t) return CurlAda.CURLcode  -- /usr/include/x86_64-linux-gnu/curl/easy.h:84
+      n : access size_t
+   ) return CurlAda.CURLcode
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_recv";
-
-  -- * NAME curl_easy_send()
-  -- *
-  -- * DESCRIPTION
-  -- *
-  -- * Sends data over the connected socket. Use after successful
-  -- * curl_easy_perform() with CURLOPT_CONNECT_ONLY option.
-  --
 
    function Send
      (the_curl : CurlAda.CURL;
       buffer : System.Address;
       buflen : size_t;
-      n : access size_t) return CurlAda.CURLcode  -- /usr/include/x86_64-linux-gnu/curl/easy.h:95
+      n : access size_t) return CurlAda.CURLcode
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_send";
 
-  -- * NAME curl_easy_upkeep()
-  -- *
-  -- * DESCRIPTION
-  -- *
-  -- * Performs connection upkeep for the given session handle.
-  --
-
-   function Upkeep (the_curl : CurlAda.CURL) return CurlAda.CURLcode  -- /usr/include/x86_64-linux-gnu/curl/easy.h:106
+   function Upkeep (the_curl : CurlAda.CURL) return CurlAda.CURLcode
    with Import => True,
         Convention => C,
         External_Name => "curl_easy_upkeep";
