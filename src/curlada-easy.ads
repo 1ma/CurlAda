@@ -20,6 +20,15 @@ package CurlAda.Easy is
         Convention => C,
         External_Name => "curl_easy_setopt";
 
+   function Set_Opt (
+      the_curl : CurlAda.CURL;
+      option : CurlAda.CURLoption;
+      value : Interfaces.C.long
+   ) return CurlAda.CURLcode
+   with Import => True,
+        Convention => C,
+        External_Name => "curl_easy_setopt";
+
    function Perform (the_curl : CurlAda.CURL) return CurlAda.CURLcode
    with Import => True,
         Convention => C,

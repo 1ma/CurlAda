@@ -5,13 +5,15 @@ with Interfaces.C.Strings;
 
 procedure Simple_Test is
    Handle : constant CurlAda.CURL := CurlAda.Easy.Init;
-   Code1, Code2 : CurlAda.CURLcode;
+   Code1, Code2, Code3 : CurlAda.CURLcode;
 begin
    Code1 := CurlAda.Easy.Set_Opt (Handle, CurlAda.CURLOPT_URL, Interfaces.C.Strings.New_String ("https://www.example.com/"));
-   Code2 := CurlAda.Easy.Perform (Handle);
+   Code2 := CurlAda.Easy.Set_Opt (Handle, CurlAda.CURLOPT_VERBOSE, 1);
+   Code3 := CurlAda.Easy.Perform (Handle);
    CurlAda.Easy.Cleanup (Handle);
 
    Ada.Text_IO.New_Line;
    Ada.Text_IO.Put_Line (Code1'Image);
    Ada.Text_IO.Put_Line (Code2'Image);
+   Ada.Text_IO.Put_Line (Code3'Image);
 end Simple_Test;
