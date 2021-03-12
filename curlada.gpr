@@ -3,7 +3,7 @@ project CurlAda is
    for Library_Name use "curlada";
    for Library_Version use "0.0.0";
 
-   for Source_Dirs use ("include");
+   for Source_Dirs use ("src");
    for Object_Dir use "obj";
    for Create_Missing_Dirs use "True";
    for Library_Dir use "lib";
@@ -66,7 +66,7 @@ project CurlAda is
                             "-gnatn"); -- Enable inlining
       when "debug" =>
          Build_Switches := ("-g",   -- Debug info
-                            "-Og"); -- No optimization
+                            "-O0"); -- No optimization
    end case;
 
    package Compiler is
