@@ -13,7 +13,7 @@ I simply [dumped an Ada spec of curl.h with GCC](https://learn.adacore.com/cours
 - [X] Minimal but working PoC through the [easy API](https://curl.se/libcurl/c/libcurl-easy.html).
 - [ ] Test a few of the typical CURLOPTs, see that they work.
 - [ ] Polish the `CurlAda.Easy.Get_Info` function, make sure that all the information of a completed request can be retrieved.
-- [ ] Hide the C interfacing into the package bodies so that users don't have to deal with `Interface.C` types directly.
+- [ ] Hide the C interfacing into the package bodies so that users don't have to deal with `Interface.C` types directly (package `CurlAda.Easier`).
 - [ ] Organize the above tasks in [AUnit](https://github.com/1ma/libaunit-lab) tests that can be run automatically on a pipeline.
 - [ ] Add suport for the [multi API](https://curl.se/libcurl/c/libcurl-multi.html) in a separate `CurlAda.Multi` package. Test it as well.
 - [ ] Tag 1.0.0 and release as an [Alire crate](https://alire.ada.dev/crates.html).
